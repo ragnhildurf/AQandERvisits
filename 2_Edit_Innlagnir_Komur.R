@@ -21,17 +21,21 @@ innlagnir$type <- as.factor("admission")
 komur$diceased <- ifelse(komur$street =="Látinn", 1, 0)
 innlagnir$diceased <- ifelse(innlagnir$street =="Látinn", 1, 0)
 
-# Create colums indicating just time and just date
+# Create colums indicating just time, date, year, month, etc.
 komur$date <- strftime(komur$datetime, "%d-%m-%Y")
 komur$time <- strftime(komur$datetime, "%H:%M:%S")
+komur$year <- strftime(komur$datetime, "%Y")
 komur$month <- strftime(komur$datetime, "%m")
+komur$week <- strftime(komur$datetime, "%V")
 komur$day <- strftime(komur$datetime, "%e")
 komur$hour <- strftime(komur$datetime, "%H")
 komur$min <- strftime(komur$datetime, "%M")
 
 innlagnir$date <- strftime(innlagnir$datetime, "%d-%m-%Y")
 innlagnir$time <- strftime(innlagnir$datetime, "%H:%M:%S")
+innlagnir$year <- strftime(innlagnir$datetime, "%Y")
 innlagnir$month <- strftime(innlagnir$datetime, "%m")
+innlagnir$week <- strftime(innlagnir$datetime, "%V")
 innlagnir$day <- strftime(innlagnir$datetime, "%e")
 innlagnir$hour <- strftime(innlagnir$datetime, "%H")
 innlagnir$min <- strftime(innlagnir$datetime, "%M")
@@ -248,22 +252,23 @@ innlagnir$cere3[innlagnir$icd3=="I61" | innlagnir$icd3=="I62" | innlagnir$icd3==
 
 ## Rearrange columns for more conveniency
 
-komur <- komur[, c("id", "gender", "age", "datetime", "date", "time", "month", 
-                   "day", "hour","min", "heiti_tgf", "diagnosis", "icd1", 
+komur <- komur[, c("id", "gender", "age", "address", "heiti_tgf", "street", "datetime", 
+                   "date", "time", "year", "month", "week", "day", "hour","min",  
+                   "diagnosis", "icd1", 
                    "icd2", "icd3", "icd4", "icd5", "icd6", "icd7", "icd8", 
                    "icd9", "icd10", "icd11", "icd12", "icd13", "icd14", "icd15",
-                   "icd16", "ward", "admission", "address", "x", "y", 
-                   "near_dist", "street", "zone", "type", "diceased", "resp1", 
+                   "icd16", "ward", "admission",  "x", "y", 
+                   "near_dist",  "zone", "type", "diceased", "resp1", 
                    "card1", "cere1", "resp2", "card2", "cere2", "resp3", 
                    "card3", "cere3")]
 
-innlagnir <- innlagnir[, c("id", "gender", "age", "datetime", "date", 
-                           "time", "month", "day", "hour", "min", 
-                           "dischargeday", "laydays", "heiti_tgf", "diano", 
+innlagnir <- innlagnir[, c("id", "gender", "age", "address", "heiti_tgf", "street", 
+                           "datetime", "date", "time", "year", "month", "week", 
+                           "day", "hour", "min", "dischargeday", "laydays", "diano", 
                            "diagnosis", "icd1", "icd2", "icd3", "icd4", "icd5", 
                            "icd6", "icd7", "icd8", "icd9", "icd10", "icd11", 
                            "icd12", "icd13", "icd14", "icd15", "icd16", 
-                           "speciality",  "address", "x", "y", "near_dist", 
-                           "street", "zone", "type", "diceased", "resp1", 
+                           "speciality",  "x", "y", "near_dist", 
+                           "zone", "type", "diceased", "resp1", 
                            "card1", "cere1", "resp2", "card2", "cere2", "resp3", 
                            "card3", "cere3")]
