@@ -16,8 +16,9 @@
 source("./AnalysisAndScripts/2_Edit_Innlagnir_Komur.R")
 source("./AnalysisAndScripts/1_Import_Predt.R")
 source("./AnalysisAndScripts/1_Import_fjarlaegd_2010.R")
+source("./AnalysisAndScripts/1_Import_population_data.R")
 
-# 1 Merge komur and innlagnir with gpsagg wit street name
+############ 1 Merge komur and innlagnir with gpsagg with street name #######
 
 # ER visits
 komurgps <- merge(komur, gpsagg, "heiti_tgf")
@@ -26,8 +27,14 @@ komurgps <- merge(komur, gpsagg, "heiti_tgf")
 innlagnirgps <- merge(innlagnir, gpsagg, "heiti_tgf")
 
 
-# 2: New dataset created in 1. will be merged with H2S exposure estimate
-# date using datetime 
+########## 2 Merge dataset from 1 with population data within areas ########
+
+komurgps <- merge(komurgps, popdata, by=c("postnr", "year"))
+
+innlagnirgps <- merge(innlagnirgps, popdata, by=c("postnr", "year"))
+
+####### 3: New dataset created in 2 will be merged with H2S exposure estimate ########
+# date using datetime - this should be corrected!
 
 # ER visits
 library(Hmisc)

@@ -23,11 +23,14 @@ popdata$femalepoppost <- as.numeric(as.character(popdata$femalepop))
 # Merge two population datasets
 popdata <- merge(popdata, popdatayear, "year")
 
+# Subset the data for only 2007 to 2014
+popdata <- subset(popdata, popdata$year > "2006")
+
 ######## Add columns defining popmunicipality and popquarters #####
 popdata <- mutate(popdata,
                   postnr = as.factor(postnr),
                   # Flokka location i capital area eða rural area
-                  location = ifelse(postnr %in% c("101", "103", "104", "105", 
+                  poplocation = ifelse(postnr %in% c("101", "103", "104", "105", 
                                                   "107", "108", "109", "110", 
                                                   "111", "112", "113", "170", 
                                                   "200", "201", "203", "210",

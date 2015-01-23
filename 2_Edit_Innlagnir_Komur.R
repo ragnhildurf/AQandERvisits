@@ -27,6 +27,7 @@ komur$time <- strftime(komur$datetime, "%H:%M:%S")
 komur$year <- strftime(komur$datetime, "%Y")
 komur$month <- strftime(komur$datetime, "%m")
 komur$week <- strftime(komur$datetime, "%V")
+komur$weekday <- strftime(komur$datetime, "%a")
 komur$day <- strftime(komur$datetime, "%e")
 komur$hour <- strftime(komur$datetime, "%H")
 komur$min <- strftime(komur$datetime, "%M")
@@ -36,6 +37,7 @@ innlagnir$time <- strftime(innlagnir$datetime, "%H:%M:%S")
 innlagnir$year <- strftime(innlagnir$datetime, "%Y")
 innlagnir$month <- strftime(innlagnir$datetime, "%m")
 innlagnir$week <- strftime(innlagnir$datetime, "%V")
+innlagnir$weekday <- strftime(innlagnir$datetime, "%a")
 innlagnir$day <- strftime(innlagnir$datetime, "%e")
 innlagnir$hour <- strftime(innlagnir$datetime, "%H")
 innlagnir$min <- strftime(innlagnir$datetime, "%M")
@@ -253,8 +255,8 @@ innlagnir$cere3[innlagnir$icd3=="I61" | innlagnir$icd3=="I62" | innlagnir$icd3==
 ## Rearrange columns for more conveniency
 
 komur <- komur[, c("id", "gender", "age", "address", "heiti_tgf", "street", "datetime", 
-                   "date", "time", "year", "month", "week", "day", "hour","min",  
-                   "diagnosis", "icd1", 
+                   "date", "time", "year", "month", "week", "weekday", "day", 
+                   "hour","min", "diagnosis", "icd1", 
                    "icd2", "icd3", "icd4", "icd5", "icd6", "icd7", "icd8", 
                    "icd9", "icd10", "icd11", "icd12", "icd13", "icd14", "icd15",
                    "icd16", "ward", "admission",  "x", "y", 
@@ -264,7 +266,8 @@ komur <- komur[, c("id", "gender", "age", "address", "heiti_tgf", "street", "dat
 
 innlagnir <- innlagnir[, c("id", "gender", "age", "address", "heiti_tgf", "street", 
                            "datetime", "date", "time", "year", "month", "week", 
-                           "day", "hour", "min", "dischargeday", "laydays", "diano", 
+                           "weekday", "day", "hour", "min", "dischargeday", 
+                           "laydays", "diano", 
                            "diagnosis", "icd1", "icd2", "icd3", "icd4", "icd5", 
                            "icd6", "icd7", "icd8", "icd9", "icd10", "icd11", 
                            "icd12", "icd13", "icd14", "icd15", "icd16", 
