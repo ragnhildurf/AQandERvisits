@@ -84,3 +84,85 @@ rm(expdatakomur)
 rm(gpsagg)
 rm(innlagnirgps)
 rm(komurgps)
+
+######## 4 finally create single column with individual exposure ######
+
+# ER visits
+
+## After merging on datetime we make a variable to select exposure on
+komurdata$dir[90 < komurdata$dir2hel  &  komurdata$dir2hel <= 100  ] <- 95
+komurdata$dir[100 < komurdata$dir2hel  &  komurdata$dir2hel <= 110  ] <- 105
+komurdata$dir[110 < komurdata$dir2hel  &  komurdata$dir2hel <= 120  ] <- 115
+komurdata$dir[120 < komurdata$dir2hel  &  komurdata$dir2hel <= 130  ] <- 125
+komurdata$dir[130 < komurdata$dir2hel ] <- 135
+
+#numeric
+komurdata$dir_n <- as.numeric(komurdata$dir)
+
+#### Assign right dirXX value as exposure for each person
+# the value exposure24h should contain the h2s 
+# concentration from each person's dirxx at the same tima as ER visit/admission
+# occurs. 
+
+# Create empty variable with desired name exposure24h
+komurdata$exposure24h <- NA
+
+# Create single column with exposure estimate for each individual in new column
+
+for(i in 1:nrow(komurdata)) {
+          if(komurdata$dir_n[i]==95){
+                    komurdata$exposure24h[i] <- komurdata$dir95[i]
+          }
+          else if(komurdata$dir_n[i]==105){
+                    komurdata$exposure24h[i] <- komurdata$dir105[i]
+          }
+          else if(komurdata$dir_n[i]==115){
+                    komurdata$exposure24h[i] <- komurdata$dir115[i]
+          }
+          else if(komurdata$dir_n[i]==125){
+                    komurdata$exposure24h[i] <- komurdata$dir125[i]
+          }
+          else {
+                    komurdata$exposure24h[i] <- komurdata$dir135[i]
+          }
+}
+
+# Admissions
+
+## After merging on datetime we make a variable to select exposure on
+innlagnirdata$dir[90 < innlagnirdata$dir2hel  &  innlagnirdata$dir2hel <= 100  ] <- 95
+innlagnirdata$dir[100 < innlagnirdata$dir2hel  &  innlagnirdata$dir2hel <= 110  ] <- 105
+innlagnirdata$dir[110 < innlagnirdata$dir2hel  &  innlagnirdata$dir2hel <= 120  ] <- 115
+innlagnirdata$dir[120 < innlagnirdata$dir2hel  &  innlagnirdata$dir2hel <= 130  ] <- 125
+innlagnirdata$dir[130 < innlagnirdata$dir2hel ] <- 135
+
+#numeric
+innlagnirdata$dir_n <- as.numeric(innlagnirdata$dir)
+
+#### Assign right dirXX value as exposure for each person
+# the value exposure24h should contain the h2s 
+# concentration from each person's dirxx at the same tima as ER visit/admission
+# occurs. 
+
+# Create empty variable with desired name exposure24h
+innlagnirdata$exposure24h <- NA
+
+# Create single column with exposure estimate for each individual in new column
+
+for(i in 1:nrow(innlagnirdata)) {
+          if(innlagnirdata$dir_n[i]==95){
+                    innlagnirdata$exposure24h[i] <- innlagnirdata$dir95[i]
+          }
+          else if(innlagnirdata$dir_n[i]==105){
+                    innlagnirdata$exposure24h[i] <- innlagnirdata$dir105[i]
+          }
+          else if(innlagnirdata$dir_n[i]==115){
+                    innlagnirdata$exposure24h[i] <- innlagnirdata$dir115[i]
+          }
+          else if(innlagnirdata$dir_n[i]==125){
+                    innlagnirdata$exposure24h[i] <- innlagnirdata$dir125[i]
+          }
+          else {
+                    innlagnirdata$exposure24h[i] <- innlagnirdata$dir135[i]
+          }
+}

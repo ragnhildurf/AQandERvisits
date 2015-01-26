@@ -1,0 +1,7 @@
+plot(expdata$              dir95[1:1000])
+lines(expdata$              dir135[1:1000], type="p", col="red")
+cor.test(expdata$dir95, expdata$dir105)
+cor.test(expdata$dir95, expdata$dir115)
+cor.test(expdata$dir95, expdata$dir125)
+cor.test(expdata$dir95, expdata$dir135)
+table(komurdata$dir_n)
