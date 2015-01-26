@@ -99,6 +99,7 @@ komurdata$dir[130 < komurdata$dir2hel ] <- 135
 #numeric
 komurdata$dir_n <- as.numeric(komurdata$dir)
 
+
 #### Assign right dirXX value as exposure for each person
 # the value exposure24h should contain the h2s 
 # concentration from each person's dirxx at the same tima as ER visit/admission

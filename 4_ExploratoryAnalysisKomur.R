@@ -224,7 +224,7 @@ ggplot(week2014,aes(x = week,y = id)) +
           geom_bar(stat = "identity") + 
           ylab("Number of ER visits in each week in 2014")
 
-# Lets bind each year together to see it more visually
+# Lets bind each year together to see it more visually - THIS IS NOT CORRECT
 timeseries <- rbind(month2007, month2008, month2009, month2010, month2011, month2012, month2013, month2014)
 
 
