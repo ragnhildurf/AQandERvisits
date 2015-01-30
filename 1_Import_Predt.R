@@ -12,16 +12,31 @@
 library(lubridate)
 
 ## Import data and clean data
-expdata <- read.csv("./DATA/GeoData/Clean_predt_2v.csv") # Import data
+expdata1 <- read.csv("./DATA/GeoData/Clean_predt_2v.csv") # Import data
+expdata2 <- read.csv("./DATA/GeoData/Clean_predt_1hour.csv")
 
 # Set columns in correct format
-expdata$datetime <- parse_date_time(expdata$datetime, "%Y%m%d %H%M", 
+expdata1$datetime <- parse_date_time(expdata1$datetime, "%Y%m%d %H%M", 
                                       truncated = 3)
-expdata$date  <- as.Date(expdata$date, format="%Y/%m/%d")
-expdata$time <- as.character(expdata$time)
+expdata2$datetime <- parse_date_time(expdata2$datetime, "%Y%m%d %H%M", 
+                                     truncated = 3)
 
-# Lets remove unnecessary columns
-keep <- c("datetime", "dir95", "dir105", "dir115", "dir125", "dir135")
+expdata1$date  <- as.Date(expdata1$date, format="%Y/%m/%d")
+# expdata2$date  <- as.Date(expdata2$date, format="%Y/%m/%d")
+expdata1$time <- as.character(expdata1$time)
+# expdata2$time <- as.character(expdata2$time)
+
+########### Merge datasets together #####################
+
+expdata <- merge(expdata1, expdata2, by="datetime")
+
+#################### Remove unnecessary columns ####################
+keep <- c("datetime", "dir95", "dir105", "dir115", "dir125", "dir135", 
+          "dir951hour", "dir1051hour", "dir1151hour", "dir1251hour", 
+          "dir1351hour")
+
 expdata <- expdata[keep]
 
 rm(keep)
+rm(expdata1)
+rm(expdata2)

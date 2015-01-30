@@ -21,6 +21,10 @@ innlagnir$type <- as.factor("admission")
 komur$diceased <- ifelse(komur$street =="Látinn", 1, 0)
 innlagnir$diceased <- ifelse(innlagnir$street =="Látinn", 1, 0)
 
+# Exclude individuals younger than 18 years of age
+komur <- subset(komur, komur$age>=18)
+innlagnir <- subset(innlagnir, komur$age>=18)
+
 # Create colums indicating just time, date, year, month, etc.
 komur$date <- strftime(komur$datetime, "%d-%m-%Y")
 komur$time <- strftime(komur$datetime, "%H:%M:%S")
@@ -42,7 +46,8 @@ innlagnir$day <- strftime(innlagnir$datetime, "%e")
 innlagnir$hour <- strftime(innlagnir$datetime, "%H")
 innlagnir$min <- strftime(innlagnir$datetime, "%M")
 
-##################################################################
+############# Subset datasets for only living patients ######################
+# (exclude deceased) who have a diagnoses (diagnosis) 
 
 ## Subset datasets for only living patients (exclude deceased) who have a 
 # diagnoses (diagnosis)
@@ -57,7 +62,13 @@ use_innlagnir <- subset(innlagnir, diceased==0)
 innlagnir <- subset(use_innlagnir, complete.cases(diagnosis))
 rm(use_innlagnir)
 
-###################################################################
+######### Exclude patients with resubmission within 10 days ###############
+# Exclude patients that come to the ER or are admitted within the next 10 
+# days and get the same diagnosis
+
+### CODE NEEDED
+
+######### Make an indicator for the first (icd1) diagnosis ####################
 
 # Make an indicator for whether the first (icd1) diagnosis is respiratory
 # Respiratory disease codes J20-J22, J40-J46 and J96)
@@ -122,7 +133,7 @@ innlagnir$cere1[innlagnir$icd1=="I61" | innlagnir$icd1=="I62"| innlagnir$icd1=="
                | innlagnir$icd1=="I67"| innlagnir$icd1=="I68"| innlagnir$icd1=="I69" 
                | innlagnir$icd1=="G45"| innlagnir$icd1=="G46"] =1
 
-#######################################################################
+######### Make an indicator for the second (icd2) diagnosis ####################
 
 # Make an indicator for whether the second (icd2) diagnosis is respiratory
 # Respiratory disease codes J20-J22, J40-J46 and J96)
@@ -187,7 +198,7 @@ innlagnir$cere2[innlagnir$icd2=="I61" | innlagnir$icd2=="I62" | innlagnir$icd2==
                 | innlagnir$icd2=="I67"| innlagnir$icd2=="I68"| innlagnir$icd2=="I69" 
                 | innlagnir$icd2=="G45"| innlagnir$icd2=="G46"] =1
 
-#######################################################################
+######### Make an indicator for the third (icd3) diagnosis ####################
 
 # Make an indicator for whether the third (icd3) diagnosis is respiratory
 # Respiratory disease codes J20-J22, J40-J46 and J96)
@@ -252,7 +263,7 @@ innlagnir$cere3[innlagnir$icd3=="I61" | innlagnir$icd3=="I62" | innlagnir$icd3==
                 | innlagnir$icd3=="I67"| innlagnir$icd3=="I68"| innlagnir$icd3=="I69" 
                 | innlagnir$icd3=="G45"| innlagnir$icd3=="G46"] =1
 
-## Rearrange columns for more conveniency
+############ Rearrange columns for more conveniency ########################
 
 komur <- komur[, c("id", "gender", "age", "address", "heiti_tgf", "street", "datetime", 
                    "date", "time", "year", "month", "week", "weekday", "day", 

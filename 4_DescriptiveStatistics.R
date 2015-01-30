@@ -22,6 +22,25 @@ cor.test(expdata$dir95, expdata$dir115)
 cor.test(expdata$dir95, expdata$dir125)
 cor.test(expdata$dir95, expdata$dir135)
 
+###
+summary(komurdata$dir95)
+summary(komurdata$dir105)
+summary(komurdata$dir115)
+summary(komurdata$dir125)
+summary(komurdata$dir135)
+
+summary(komurdata$age)
+length(komurdata$resp1[komurdata$resp1==1])
+length(komurdata$card1[komurdata$card1==1])
+length(komurdata$cere1[komurdata$cere1==1])
+summary(innlagnirdata$age)
+
+length(innlagnirdata$resp1[innlagnirdata$resp1==1])
+length(innlagnirdata$card1[innlagnirdata$card1==1])
+length(innlagnirdata$cere1[innlagnirdata$cere1==1])
+summary(innlagnirdata$age)
+
+
 # Table how many ER visits there are in different areas.
 table(komurdata$dir_n)
 
@@ -62,17 +81,25 @@ melt_expdata <- melt(data=expdata, id.vars="datetime",
                      value.name=c("concentration"), 
                      variable.name="direction")
 
-# Add number of ER visits to dataframe to plot it with the exposure data
-# THIS DOES NOT WORK FOR NOW. 
+# This doesn´t add to the information of the following plot
+# # Add number of ER visits to dataframe to plot it with the exposure data
+# # Start by aggregateing the data by datetime and direction
 # komurdatetime <- aggregate(id~as.character(datetime)+dir, data=komurdata, FUN=length)
+# # Set corresponding column names
 # colnames(komurdatetime) <- c("datetime", "direction", "count")
+# 
+# # Harmonise direction classification with exposure
+# komurdatetime$direction <- paste("dir", komurdatetime$direction, sep="")
+# # Set correct type
+# komurdatetime$datetime <- as.POSIXct(komurdatetime$datetime, "%d-%m-%Y %H:%M:%S")
+# 
 # komurdatetime$direction <- as.factor(komurdatetime$direction)
 # komurdatetime$count <- as.numeric(komurdatetime$count)
-# 
+#  
 # melt_expdata <- merge(melt_expdata, komurdatetime, by= c("datetime", "direction"))
 
 # Plot exposure data
-ggplot(melt_expdata,aes(datetime, concentration,fill=direction))+
+ggplot(melt_expdata,aes(datetime, concentration, fill=direction))+
           geom_point(stat = "identity")+
           facet_grid(direction~.)+
           theme_bw() + 
